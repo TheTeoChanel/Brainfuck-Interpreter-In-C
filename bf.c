@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 	int stack[30000] = {0};
 	int ptr = 0;
 	int depth = 1;
-	char program[512];
+	char program[1024];
 	char buf[2];
 
 	FILE *fptr;
@@ -134,6 +134,6 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	if (traceMode) fclose(logs);
+	fclose(logs);
 	return 0;
 }
