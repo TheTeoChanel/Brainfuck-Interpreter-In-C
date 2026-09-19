@@ -28,25 +28,21 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 		printf("Options:\n\n");
 		printf("--help		open this page (not a self reference)\n");
-		printf("-t			TRACE MODE: Tracking every command in logs.txt\n");
-		printf("-d			DEBUG MODE: Printing only important actions ([ ] . ,)\n");
+		printf("-trace		TRACE MODE: Tracking every command in logs.txt\n");
+		printf("-debug		DEBUG MODE: Printing only important actions ([ ] . ,)\n");
 		printf("--version	Show version of this program\n");
 		printf("\nHad fun making this, TheTeoChanel 2026\n");
 		return 0;
 	}
-	if (argc > 2 && strcmp(argv[2], "-d")==0)
+	if (argc > 2 && strcmp(argv[2], "-debug")==0)
 		debugMode = true;
-	else if (argc > 2) {
-		printf("fatal error: unrecognized option '%s'.", argv[2]);
-		return 1;
-	}
-
-	if (argc > 2 && strcmp(argv[2], "-t")==0)
-		traceMode = true;
-	else if (argc > 2) {
-		printf("fatal error: unrecognized option '%s'.", argv[2]);
-		return 1;
-	}
+	else if (argc > 2 && strcmp(argv[2], "-trace")==0)
+		 	traceMode = true;
+		else if (argc > 2) {
+			printf("fatal error: unrecognized option '%s'.", argv[2]);
+			printf("use --help to get help\n");
+			return 1;
+		}
 
 	FILE *logs;
 	logs = fopen("logs.txt", "w");
