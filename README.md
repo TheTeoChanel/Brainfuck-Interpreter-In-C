@@ -24,9 +24,9 @@ or
 - `bf --OPTION` for a single option.
 
 ### 3.2 Options:
-- `-t` TRACE MODE: Tracks every single command in logs.txt `INPUT FILE NEEDED`
-- `-d` DEBUG MODE: Prints only important commans in terminal (`[` `]` `.` `,` ) `INPUT FILE NEEDED`
--  `--help` get help (if you are reading this you already dont need it).
+- `-trace` TRACE MODE: Tracks every single command and logs it in `logs.txt` `INPUT FILE NEEDED`
+- `-debug` DEBUG MODE: Prints only important commands in terminal (`[` `]` `.` `,` ) `INPUT FILE NEEDED`
+-  `--help` get help (if you are reading this you already don't need it).
 - `--version` show this program's version.
 
 ### 3.3 Example
@@ -37,7 +37,7 @@ I've actually made a hello world program in BF for this one.
 4. Open the terminal in this directory and enter `bf helloWorld.bf`.
 6. It should exactly print "`Hello, World!`".
 
-You can try to add `-d` or `-t` at the end to see exactly what is happening.
+You can try to add `-debug` or `-trace` at the end to see exactly what is happening.
 
 ## 4. How it works under the hood
 Now, I will talk about how I coded it.
