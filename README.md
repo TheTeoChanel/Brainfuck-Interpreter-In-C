@@ -50,7 +50,7 @@ I've actually made a hello world program in BF for this one.
 
 1. Compile the source code `bf.c` into `bf`.
 2. Download and put the file `helloWorld.bf` into the same directory as the `bf` executable.
-3. Open the terminal in this directory and enter `bf helloWorld.bf` if on windows. On UNIX systems (linux&macOs) enter `./bf helloworld.bf`.
+3. Open the terminal in this directory. Enter `./bf helloworld.bf` if you are in UNIX bash terminal. If you are in Windows terminal, enter `bf helloWorld.bf`.
 
 It should exactly print "`Hello, World!`".
 
