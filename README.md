@@ -4,7 +4,7 @@ This is my biggest project so far! Let's dive into this documentation!
 
 ## 1. Table of contents
 - [1. Table of contents](#1-table-of-contents)
-- [2. What is BrainF*ck?](#2-what-is-brain-fck)
+- [2. What is BrainF*ck?](#2-what-is-brain-f*ck)
 - [3. Libraries used](#3-libraries-used)
 - [4. How to use it](#4-how-to-use-it)
 - [4.1 Syntax](#41-syntax)
@@ -50,7 +50,7 @@ I've actually made a hello world program in BF for this one.
 
 1. Compile the source code `bf.c` into `bf`.
 2. Download and put the file `helloWorld.bf` into the same directory as the `bf` executable.
-3. Open the terminal in this directory and enter `bf helloWorld.bf`.
+3. Open the terminal in this directory and enter `bf helloWorld.bf` if on windows. On UNIX systems (linux&macOs) enter `./bf helloworld.bf`.
 
 It should exactly print "`Hello, World!`".
 
