@@ -67,7 +67,7 @@ This executable automatically creates a blank `logs.txt` file. If `-trace` is us
 I use this `ptr` integer variable as the pointer, and `stack[]` as the cell array.
 
 ---
-Implementing `+` and `-` was pretty straightforward, `<` and `>` too. They just increment the `ptr` or `stack[ptr]` and loop around if needed.
+Implementing `+` and `-` was pretty straightforward, `<` and `>` too. They just increment the `pointer` or `stack[pointer]` and loop around if needed.
 The `,` is still in beta, it asks the user to enter a single character in the terminal.
 
 And then, the loop functions `[` and `]` were hardest to code by far! The solution uses a `depth` integer variable that is running through nested loops.
