@@ -4,7 +4,7 @@ This is my biggest project so far! Let's dive into this documentation!
 
 ## 1. Table of contents
 - [1. Table of contents](#1-table-of-contents)
-- [2. What is BrainF*ck?](#2-what-is-brain-f*ck)
+- [2. What is BrainF*ck?](#2-what-is-brain-fck)
 - [3. Libraries used](#3-libraries-used)
 - [4. How to use it](#4-how-to-use-it)
 - [5. Additional info and dev noes](#5-additional-info-and-dev-notes)
