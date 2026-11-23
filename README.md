@@ -64,7 +64,7 @@ First, some BF interpreter info:
 
 This executable automatically creates a blank `logs.txt` file. If `-trace` is used (TRACE MODE), it logs every single runned command in `logs.txt`.
 
-I use this `ptr` integer variable as the pointer, and `stack[]` as the cell array.
+I use this `pointer` integer variable as the pointer, and `stack[]` as the cell array.
 
 ---
 Implementing `+` and `-` was pretty straightforward, `<` and `>` too. They just increment the `pointer` or `stack[pointer]` and loop around if needed.
