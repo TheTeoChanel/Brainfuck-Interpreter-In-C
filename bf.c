@@ -4,8 +4,18 @@
 #include <stdbool.h>
 
 int main(int argc, char *argv[]) {
+	//INIT STACK
+	unsigned char stack[30000] = {0};
+	int stackLimit = 29999; // CELL COUNT, CAN BE CHANGED
+	int pointer = 0;
+	char buf[2];
+
+	char program[2048];
+
 	bool debugMode = false;
 	bool traceMode = false;
+	//char input[128];
+	//int inputIdx = 0;
 
 	if (argc == 1) {
 		printf("fatal error: no input file\n");
@@ -13,16 +23,16 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	// VERSION
-	if (strcmp(argv[1], "--version")==0) {
-		printf("BrainF*ck Interpreter by TheTeoChannel\nVersion 0.12 // 2026\n");
+	if (strcmp(argv[1], "--version") == 0 && argc == 2) {
+		printf("BrainF*ck Interpreter by TheTeoChannel\nVersion 0.22 // 2026\n");
 		return 0;
 	}
-	// HELP
-	if (strcmp(argv[1], "--help")==0) {
+	// SHOW HELP
+	if (strcmp(argv[1], "--help") == 0 && argc == 2) {
 		printf("BRAINF*CK Interpreter by TheTeoChanel\n");
 		printf("\n");
 		printf("Syntax:\n\n");
-		printf("bf FILENAME.BF -OPTIONS\n");
+		printf("bf FILENAME.BF --OPTIONS\n");
 		printf("or\n");
 		printf("bf -OPTION\n");
 		printf("\n");
@@ -33,31 +43,24 @@ int main(int argc, char *argv[]) {
 		printf("--version	Show version of this program\n");
 		printf("\nHad fun making this, TheTeoChanel 2026\n");
 		return 0;
-	}
-	if (argc > 2 && strcmp(argv[2], "-debug")==0)
+	} 
+	if (argc == 3 && strcmp(argv[2], "-debug") == 0) {
 		debugMode = true;
-	else if (argc > 2 && strcmp(argv[2], "-trace")==0)
-		 	traceMode = true;
-		else if (argc > 2) {
-			printf("fatal error: unrecognized option '%s'.", argv[2]);
-			printf("use --help to get help\n");
-			return 1;
-		}
+	} else if (argc == 3 && strcmp(argv[2], "-trace") == 0) {
+		 traceMode = true;
+	}
 
-	FILE *logs;
-	logs = fopen("logs.txt", "w");
-	fprintf(logs, "THETEOCHANNEL BRAINF*CK INTERPRETER LOGS\n");
-	fprintf(logs, "COMMAND, cell:CELL NUM, val:CELL VALUE\n");
-	fprintf(logs, "!PRINT!, cell:CELL NUM, val:CELL VALUE, char:CELL VALUE CHAR\n");
-	fprintf(logs, "-------------------------------------------------\n");
+	//if (argc > 3 && strcmp(argv[2], "-input")==0)	
+	//	strcpy(input, argv[3]);
+	//printf("%s", input);
 
-	int stack[30000] = {0};
-	int ptr = 0;
-	int depth = 1;
-	char program[1024];
-	char buf[2];
-
-	//INIT FILE
+	FILE *logsPTR;
+	logsPTR = fopen("logs.txt", "w");
+	fprintf(logsPTR, "THETEOCHANNEL BF INTERPRETER LOG FILE\n");
+	fprintf(logsPTR, "COMMAND, cell:CELL NUM, val:CELL VALUE\n");
+	fprintf(logsPTR, "-------------------------------------------------\n");
+	
+	//INIT INPUT FILE
 	FILE *fptr;
 	fptr = fopen(argv[1], "r");
 
@@ -71,71 +74,73 @@ int main(int argc, char *argv[]) {
 	program[programLen] = '\0';
 	fclose(fptr);
 
-	for (int i = 0; i < programLen; i++) {
-		switch (program[i]) {
+	for (int pc = 0; pc < programLen; pc++) { //PC=PROGRAM COUNTER
+		switch (program[pc]) {
 		case '+':
-			stack[ptr]++;
-			if (stack[ptr] > 255) stack[ptr] = 0;
-			if (traceMode) fprintf(logs, "+, cell:%d, val:%d\n", ptr, stack[ptr]);
+			stack[pointer]++;
+			if (traceMode) fprintf(logsPTR, "+, cell:%d, val:%d\n", pointer, stack[pointer]);
 			break;
-		
+
 		case '-':
-			stack[ptr]--;
-			if (stack[ptr] < 0) stack[ptr] = 255;
-			if (traceMode) fprintf(logs, "-, cell:%d, val:%d\n", ptr, stack[ptr]);
+			stack[pointer]--;
+			if (traceMode) fprintf(logsPTR, "-, cell:%d, val:%d\n", pointer, stack[pointer]);
 			break;
-		
+
 		case '<':
-			ptr--;
-			if (ptr < 0) ptr = 29999;
-			if (traceMode) fprintf(logs, "<, cell:%d, val:%d\n", ptr, stack[ptr]);
+			pointer--;
+			if (pointer < 0) pointer = stackLimit;
+			if (traceMode) fprintf(logsPTR, "<, cell:%d, val:%d\n", pointer, stack[pointer]);
 			break;
 		
 		case '>':
-			ptr++;
-			if (ptr > 29999) ptr = 0;
-			if (traceMode) fprintf(logs, ">, cell:%d, val:%d\n", ptr, stack[ptr]);
+			pointer++;
+			if (pointer > stackLimit) pointer = 0;
+			if (traceMode) fprintf(logsPTR, ">, cell:%d, val:%d\n", pointer, stack[pointer]);
 			break;
 		
 		case '.':
-			printf("%c", stack[ptr]);
-			if (debugMode) printf("!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", ptr, stack[ptr], stack[ptr]);
-			if (traceMode) fprintf(logs, "!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", ptr, stack[ptr], stack[ptr]);
+			printf("%c", stack[pointer]);
+			if (debugMode) printf("!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", pointer, stack[pointer], stack[pointer]);
+			if (traceMode) fprintf(logsPTR, "!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", pointer, stack[pointer], stack[pointer]);
 			break;
 		
 		case ',':
 			printf("USER INPUT> ");
 			fgets(buf, sizeof(buf), stdin);
-			stack[ptr] = (int)buf[0];
+			stack[pointer] = (int)buf[0];
+
+			//stack[ptr] = input[inputIdx];
+			//printf("%c", input[inputIdx]);
+			//inputIdx++;
 			break;
 
 		case '[':
-			if (stack[ptr] == 0) {
+			if (stack[pointer] == 0) {
+				int depth = 1;
 				while (depth > 0) {
-					i++;
-					if (program[i]=='[') depth++;
-					if (program[i]==']') depth--;
+					pc++;
+					if (program[pc]=='[') depth++;
+					if (program[pc]==']') depth--;
 				}
-				depth = 1;
 			}
-			if (debugMode) printf("[, cell:%d, val:%d\n", ptr, stack[ptr]);
-			if (traceMode) fprintf(logs, "!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", ptr, stack[ptr], stack[ptr]);			
+			if (debugMode) printf("[, cell:%d, val:%d\n", pointer, stack[pointer]);
+			if (traceMode) fprintf(logsPTR, "[, cell:%d, val:%d\n", pointer, stack[pointer], stack[pointer]);			
 			break;
 		
 		case ']':
-			if (stack[ptr] != 0) {
+			if (stack[pointer] != 0) {
+				int depth = 1;
 				while (depth > 0) {
-					i--;
-					if (program[i]==']') depth++;
-					if (program[i]=='[') depth--;
+					pc--;
+					if (program[pc]==']') depth++;
+					if (program[pc]=='[') depth--;
 				}
-				depth = 1;
 			}
-			if (debugMode) printf("], cell:%d, val:%d\n", ptr, stack[ptr]);
-			if (traceMode) fprintf(logs, "!PRINT! cell:%d, val:%d, CHAR=\"%c\"\n", ptr, stack[ptr], stack[ptr]);			
+			if (debugMode) printf("], cell:%d, val:%d\n", pointer, stack[pointer]);
+			if (traceMode) fprintf(logsPTR, "], cell:%d, val:%d\n", pointer, stack[pointer], stack[pointer]);			
 			break;
 		}
 	}
-	fclose(logs);
+	fclose(logsPTR);
 	return 0;
 }
